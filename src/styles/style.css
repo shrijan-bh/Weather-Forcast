@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.5px;
+  background-color: #4cb963;
+}
+
+.mainContainer {
+  text-align: center;
+  background: #ffffff;
+  box-shadow: 4px 4px 250px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem 5rem 2rem;
+}
+
+.submitBtn {
+  display: inline;
+  margin-left: 0.3rem;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(5, 86, 236);
+  color: white;
+  font-weight: 500;
+  transition: background-color 0.4s ease-in;
+}
+
+.submitBtn:hover {
+  background-color: rgb(3, 66, 185);
+  cursor: pointer;
+}
+
+.wrap-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  margin: auto;
+}
+
+.inputBox {
+  display: inline;
+  padding: 0.5rem 0.5rem 0.2rem;
+  outline: none;
+  border: 1px rgb(187, 187, 187);
+  border-bottom-style: solid;
+  margin-bottom: 2rem;
+}
+
+.listHeadContainer {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0.8rem 0;
+}
+
+.reportBox {
+  background-color: rgb(204, 204, 204);
+  padding: 1.8rem 3rem;
+  border: 1px solid rgb(202, 202, 202);
+  border-radius: 10px;
+}
+
+.locationBox .location {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.weatherBox .temp {
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.weatherBox .weather {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.locationBox .date{
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.weatherIcon .logoIcon{
+  width: 80px;
+  height:80px
+}
