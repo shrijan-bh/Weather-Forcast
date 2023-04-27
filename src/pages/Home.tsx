@@ -12,24 +12,42 @@ const Home = () => {
   const [apiData, setApiData] = useState<ApiData>();
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
   const [homeAddrData, setHomeAddrData] = useState<ApiData>();
+  const homeAddress = "Biratnagar";
 
   async function getWeatherData(inputValue: string) {
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
     await fetch(api)
       .then((response) => response.json())
-      .then((data:ApiData) => {
+      .then((data: ApiData) => {
         if (data.cod === 200) {
           setApiData(data);
+
           if (arrayData.length < 3) {
-            arrayData.find(e =>e.sys.id === data.sys.id)
+            if (
+              arrayData.find((e) => e.id === data.id) ??
+              inputValue.toUpperCase() === homeAddress.toUpperCase()
+            ) {
+              setinputValue("");
+
+              toastHook({
+                message: "Repeated value",
+                type: "warning",
+              });
+            } else {
               setArrayData((prev) => [...prev, data]);
-          } else{
+              setinputValue("");
+            }
+          } else {
+            setinputValue("");
+
             toastHook({
               message: "Maximum limit reached",
               type: "warning",
             });
-          } setinputValue('');
+          }
         } else {
+          setinputValue("");
+
           toastHook({
             message: "No city found",
             type: "warning",
@@ -75,8 +93,6 @@ const Home = () => {
     return `${day} ${date} ${month} ${year}`;
   };
 
-  const homeAddress = "Biratnagar";
-
   useEffect(() => {
     const defaultDataFetch = async () => {
       const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
@@ -97,8 +113,6 @@ const Home = () => {
     defaultDataFetch().catch((err) => console.log(err));
   }, []);
 
-  
-
   return (
     <>
       <ToastContainer />
@@ -107,31 +121,35 @@ const Home = () => {
       </Helmet>
       <div className="wrap-container">
         <div className="mainContainer">
-          <form className="formBox" onSubmit={inputOnSubmit}>
-            <input
-              type="text"
-              className="inputBox"
-              placeholder="Home city name"
-              onChange={(e) => setinputValue(e.target.value)}
-            ></input>
-            <input type="submit" value="Set" className="submitBtn"></input>
-          </form>
           <div className="homeContainer">
             <div className="homeDataContainer">
               <p className="listHeadContainer">Home Address</p>
+
               <ReportBox
                 apiData={homeAddrData}
                 dateBuilder={dateBuilder(new Date())}
               />
             </div>
+            <div className="searchBar">
+              <form className="formBox" onSubmit={inputOnSubmit}>
+                <input
+                  type="text"
+                  value={inputValue}
+                  className="inputBox"
+                  placeholder="City name"
+                  onChange={(e) => setinputValue(e.target.value)}
+                ></input>
+                <input type="submit" value="Add" className="submitBtn"></input>
+              </form>
+            </div>
             <hr />
+
             <div className="secondaryWeatherContainer">
               {arrayData?.map((item, index) => (
                 <ReportBox
                   key={index}
                   apiData={item}
                   dateBuilder={dateBuilder(new Date())}
-
                 />
               ))}
             </div>
