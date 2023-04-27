@@ -5,6 +5,7 @@ interface Temperature {
 interface Weather {
   main: string;
   icon: string;
+  description: string;
 }
 
 interface ApiData {

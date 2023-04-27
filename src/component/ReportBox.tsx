@@ -27,7 +27,7 @@ const ReportBox = ({ apiData, dateBuilder }: ICardProps) => {
           <div className="temp">{Math.round(apiData?.main?.temp ?? 0)}°C</div>
           <div className="weather">
             {apiData?.weather?.map((item, index) => (
-              <p key={index}>{item?.main}</p>
+              <p key={index}>{item?.description}</p>
             ))}
           </div>
         </div>
