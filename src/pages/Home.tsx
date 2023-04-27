@@ -5,18 +5,30 @@ import ApiData from "../types/ApiData.type";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { toastHook } from "../hooks/toastHook";
+import ReportBox from "../component/ReportBox";
 
 const Home = () => {
   const [inputValue, setinputValue] = useState("");
   const [apiData, setApiData] = useState<ApiData>();
+  const [arrayData, setArrayData] = useState<ApiData[]>([]);
+  const [homeAddrData, setHomeAddrData] = useState<ApiData>();
 
   async function getWeatherData(inputValue: string) {
-    const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=9271d8c0affbf4ee5e9f1b064e23a0c4&units=metric`;
+    const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
     await fetch(api)
       .then((response) => response.json())
-      .then((data) => {
+      .then((data:ApiData) => {
         if (data.cod === 200) {
           setApiData(data);
+          if (arrayData.length < 3) {
+            arrayData.find(e =>e.sys.id === data.sys.id)
+              setArrayData((prev) => [...prev, data]);
+          } else{
+            toastHook({
+              message: "Maximum limit reached",
+              type: "warning",
+            });
+          } setinputValue('');
         } else {
           toastHook({
             message: "No city found",
@@ -63,11 +75,29 @@ const Home = () => {
     return `${day} ${date} ${month} ${year}`;
   };
 
+  const homeAddress = "Biratnagar";
+
   useEffect(() => {
-    if (!apiData) {
-      return;
-    }
-  }, [apiData]);
+    const defaultDataFetch = async () => {
+      const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
+      await fetch(api)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.cod === 200) {
+            setHomeAddrData(data);
+            console.log("hit");
+          } else {
+            toastHook({
+              message: "No city found",
+              type: "warning",
+            });
+          }
+        });
+    };
+    defaultDataFetch().catch((err) => console.log(err));
+  }, []);
+
+  
 
   return (
     <>
@@ -81,36 +111,29 @@ const Home = () => {
             <input
               type="text"
               className="inputBox"
-              placeholder="City name"
+              placeholder="Home city name"
               onChange={(e) => setinputValue(e.target.value)}
             ></input>
-            <input type="submit" value="Search" className="submitBtn"></input>
+            <input type="submit" value="Set" className="submitBtn"></input>
           </form>
-          <p className="listHeadContainer">Weather Report</p>
-
-          <div className="reportBox">
-            <div className="locationBox">
-              <div className="location">{apiData?.name}</div>
-              <div className="date">{dateBuilder(new Date())}</div>
+          <div className="homeContainer">
+            <div className="homeDataContainer">
+              <p className="listHeadContainer">Home Address</p>
+              <ReportBox
+                apiData={homeAddrData}
+                dateBuilder={dateBuilder(new Date())}
+              />
             </div>
-            <div className="weatherBox">
-              <div className="weatherIcon">
-                {apiData?.weather?.map((item, index) => (
-                  <img
-                    className="logoIcon"
-                    key={index}
-                    src={`https://openweathermap.org/img/wn/${item.icon}.png`}
-                  ></img>
-                ))}
-              </div>
-              <div className="temp">
-                {Math.round(apiData?.main?.temp ?? 0)}°C
-              </div>
-              <div className="weather">
-                {apiData?.weather?.map((item, index) => (
-                  <p key={index}>{item?.main}</p>
-                ))}
-              </div>
+            <hr />
+            <div className="secondaryWeatherContainer">
+              {arrayData?.map((item, index) => (
+                <ReportBox
+                  key={index}
+                  apiData={item}
+                  dateBuilder={dateBuilder(new Date())}
+
+                />
+              ))}
             </div>
           </div>
         </div>

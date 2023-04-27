@@ -11,6 +11,8 @@ interface ApiData {
     name: string;
     main: Temperature;
     weather: Weather[];
+    sys:{id:number} 
+    cod:number
 }
 
 export default ApiData;
