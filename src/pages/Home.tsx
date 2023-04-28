@@ -6,13 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { toastHook } from "../hooks/toastHook";
 import ReportBox from "../component/ReportBox";
+import HomeBox from "../component/HomeBox";
 
 const Home = () => {
   const [inputValue, setinputValue] = useState("");
   const [apiData, setApiData] = useState<ApiData>();
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
-  const [homeAddrData, setHomeAddrData] = useState<ApiData>();
-  const homeAddress = "Biratnagar";
+  const [homeAddrData, setHomeAddrData] = useState<ApiData[]>([]);
+  const homeAddress = "KAthmandu";
 
   async function getWeatherData(inputValue: string) {
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
@@ -55,6 +56,7 @@ const Home = () => {
         }
       });
   }
+
   const inputOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getWeatherData(inputValue);
@@ -93,6 +95,17 @@ const Home = () => {
     return `${day} ${date} ${month} ${year}`;
   };
 
+  const delOnClick = (item: ApiData) => {
+    const answer = arrayData.includes(item);
+    answer
+      ? (setArrayData((current) => current.filter((ite) => ite !== item)),
+        toastHook({
+          message: "Sucessfully deleted",
+          type: "success",
+        }))
+      : console.log("No data");
+  };
+
   useEffect(() => {
     const defaultDataFetch = async () => {
       const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
@@ -125,8 +138,8 @@ const Home = () => {
             <div className="homeDataContainer">
               <p className="listHeadContainer">Home Address</p>
 
-              <ReportBox
-                apiData={homeAddrData}
+              <HomeBox
+                homeAddrData={homeAddrData}
                 dateBuilder={dateBuilder(new Date())}
               />
             </div>
@@ -145,11 +158,12 @@ const Home = () => {
             <hr />
 
             <div className="secondaryWeatherContainer">
-              {arrayData?.map((item, index) => (
+              {arrayData?.map((item) => (
                 <ReportBox
-                  key={index}
+                  item={item}
                   apiData={item}
                   dateBuilder={dateBuilder(new Date())}
+                  delOnClickFunction={delOnClick}
                 />
               ))}
             </div>
@@ -159,5 +173,4 @@ const Home = () => {
     </>
   );
 };
-
 export default Home;
