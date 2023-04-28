@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import "../styles/style.css";
+
 import ApiData from "../types/ApiData.type";
 
 interface ICardProps {
@@ -38,14 +40,16 @@ const ReportBox = ({
             ))}
           </div>
         </div>
-        <button
-          key={apiData?.id}
-          type="button"
-          className="deleteButton"
-          onClick={() => delOnClickFunction(item)}
-        >
-          ❌
-        </button>
+        <div className="deleteBox">
+          <button
+            key={apiData?.id}
+            type="button"
+            className="deleteButton"
+            onClick={() => delOnClickFunction(item)}
+          >
+            ❌
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ body {
   box-shadow: 4px 4px 250px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 1rem 2rem 2rem;
-  width: 56%;
+  width: 54%;
 }
 
 .submitBtn {
@@ -123,12 +123,32 @@ body {
   font-weight: 500;
 }
 
-.weatherIcon .logoIcon {
+.weatherIcon .logoIconHome {
   float: left;
   width: 80px;
   height: 80px;
 }
-
+.weatherIcon .logoIconHome {
+  width: 100px;
+  height: 100px;
+}
 .homeContainer {
   margin: -1rem 0 0 0;
+}
+
+.deleteButton {
+  outline: none;
+
+  border: 1px solid rgb(187, 187, 187);
+  border-radius: 3px;
+  padding: 3px;
+  font-size: 0.65rem;
+  background-color: rgb(231, 231, 231);
+  cursor: pointer;
+}
+
+.deleteBox {
+  position: absolute;
+  top: 35rem;
+  margin: 0.8rem 1.5rem 0 11.5rem;
 }

@@ -3,7 +3,7 @@ import ApiData from "../types/ApiData.type";
 
 interface ICardProps {
   item: ApiData;
-  homeAddrData: ApiData;
+  homeAddrData: ApiData | undefined;
   dateBuilder: ReactNode;
 }
 
@@ -19,7 +19,7 @@ const ReportBox = ({ homeAddrData, dateBuilder }: ICardProps) => {
           <div className="weatherIcon">
             {homeAddrData?.weather?.map((item, index) => (
               <img
-                className="logoIcon"
+                className="logoIconHome"
                 key={index}
                 src={`https://openweathermap.org/img/wn/${item.icon}.png`}
               ></img>
