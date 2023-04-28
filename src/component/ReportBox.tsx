@@ -42,7 +42,6 @@ const ReportBox = ({
         </div>
         <div className="deleteBox">
           <button
-            key={apiData?.id}
             type="button"
             className="deleteButton"
             onClick={() => delOnClickFunction(item)}

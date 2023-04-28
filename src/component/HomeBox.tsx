@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import ApiData from "../types/ApiData.type";
 
 interface ICardProps {
-  item: ApiData;
   homeAddrData: ApiData | undefined;
   dateBuilder: ReactNode;
 }

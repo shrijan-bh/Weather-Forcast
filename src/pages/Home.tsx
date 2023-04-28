@@ -12,9 +12,8 @@ const Home = () => {
   const [inputValue, setinputValue] = useState("");
   const [apiData, setApiData] = useState<ApiData>();
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
-  const [homeAddrData, setHomeAddrData] = useState<ApiData[]>([]);
-  const homeAddress = "KAthmandu";
-  console.log(apiData);
+  const [homeAddrData, setHomeAddrData] = useState<ApiData>();
+  const homeAddress = "Kathmandu";
   async function getWeatherData(inputValue: string) {
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
     await fetch(api)
