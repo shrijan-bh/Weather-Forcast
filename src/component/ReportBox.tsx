@@ -20,7 +20,7 @@ const ReportBox = ({
 }: ICardProps) => {
   return (
     <div className="outerContainer">
-      <Link to="detail" className="linkBox" target="_self ">
+      <Link to={`${item.name}`} className="linkBox" target="_self ">
         <div className="reportBox">
           <div className="locationBox">
             <div className="location">{apiData?.name}</div>
