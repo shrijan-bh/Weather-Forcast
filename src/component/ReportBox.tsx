@@ -141,7 +141,6 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
               </div>
             </div>
           </Modal.Body>
-          <Modal.Footer></Modal.Footer>
         </Modal>
       </>
     );
@@ -176,10 +175,7 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
               </div>
             </div>
           </div>
-          <MyVerticallyCenteredModal
-            show={modalShow}
-            onHide={() => setModalShow(false)}
-          />
+
           <style>
             <link
               rel="stylesheet"
@@ -189,6 +185,10 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
             />
           </style>
         </div>
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
         <div className="deleteBox">
           <button
             type="button"
