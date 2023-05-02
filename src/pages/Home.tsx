@@ -1,6 +1,5 @@
 import { Helmet } from "react-helmet";
-import { useState, useEffect, ReactNode } from "react";
-import Modal, { ModalProps } from "react-bootstrap/Modal";
+import { useState, useEffect } from "react";
 import React from "react";
 
 import "../styles/style.css";
@@ -10,11 +9,9 @@ import { ToastContainer } from "react-toastify";
 import { toastHook } from "../hooks/toastHook";
 import ReportBox from "../component/ReportBox";
 import HomeBox from "../component/HomeBox";
-import { Omit, BsPrefixProps } from "react-bootstrap/esm/helpers";
 
 const Home = () => {
   const [inputValue, setinputValue] = useState("");
-  const [modalShow, setModalShow] = React.useState(false);
   const [apiData, setApiData] = useState<ApiData>();
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
   const [homeAddrData, setHomeAddrData] = useState<ApiData>();
@@ -118,7 +115,6 @@ const Home = () => {
         .then((data) => {
           if (data.cod === 200) {
             setHomeAddrData(data);
-            console.log("hit");
           } else {
             toastHook({
               message: "No city found",
@@ -129,104 +125,7 @@ const Home = () => {
     };
     defaultDataFetch().catch((err) => console.log(err));
   }, []);
-  function MyVerticallyCenteredModal(
-    props: JSX.IntrinsicAttributes &
-      Omit<
-        Omit<
-          React.DetailedHTMLProps<
-            React.HTMLAttributes<HTMLDivElement>,
-            HTMLDivElement
-          >,
-          "ref"
-        > & {
-          ref?:
-            | ((instance: HTMLDivElement | null) => void)
-            | React.RefObject<HTMLDivElement>
-            | null
-            | undefined;
-        },
-        BsPrefixProps<"div"> & ModalProps
-      > &
-      BsPrefixProps<"div"> &
-      ModalProps & { children?: ReactNode }
-  ) {
-    return (
-      <>
-        <Modal
-          {...props}
-          size="lg"
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
-        >
-          <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">
-              {apiData?.name},{apiData?.sys.country}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div className="date">{dateBuilder(new Date())}</div>
-            <div className="coordinateBox">
-              <div className="latitiudeBox">
-                Latitude: {apiData?.coord.lat}°
-              </div>
-              <div className="longitudeBox">
-                Longitude: {apiData?.coord.lon}°
-              </div>
-            </div>
-            <div className="weatherBox">
-              <div className="weatherIcon">
-                {apiData?.weather?.map((item, index) => (
-                  <img
-                    className="logoIconHome"
-                    key={index}
-                    src={`https://openweathermap.org/img/wn/${item.icon}.png`}
-                  ></img>
-                ))}
-              </div>
-              <div className="TemperatureFactor">
-                <div className="temp">
-                  {Math.round(apiData?.main?.temp ?? 0)}°C
-                </div>
-                <div className="feelLike">
-                  Feels Like: {Math.round(apiData?.main?.feels_like ?? 0)}
-                  °C
-                </div>
-                <br />
-                <div className="minTemp">
-                  Minimum Temperaure : {Math.round(apiData?.main.temp_min ?? 0)}
-                  °C
-                </div>
-                <div className="maxTemp">
-                  MAximum Temperature: {Math.round(apiData?.main.temp_max ?? 0)}
-                  °C
-                </div>
-                <div className="pressure">
-                  Pressure: {apiData?.main.pressure}hPa
-                </div>
-                <div className="humidity">
-                  Humidity: {apiData?.main.humidity}%
-                </div>
-              </div>
-              <div className="windFactor">
-                <div className="windSpeed">
-                  Wind Speed: {apiData?.wind.speed}
-                </div>
-                <div className="winddegree">
-                  Wind Angle: {apiData?.wind.deg}°
-                </div>
-              </div>
-              <div className="weather">
-                {apiData?.weather?.map((item, index) => (
-                  <p key={index}>{item?.description}</p>
-                ))}
-              </div>
-            </div>
-          </Modal.Body>
-          <Modal.Footer></Modal.Footer>
-        </Modal>
-      </>
-    );
-  }
+
   return (
     <>
       <ToastContainer />
@@ -260,23 +159,16 @@ const Home = () => {
 
             <div className="secondaryWeatherContainer">
               {arrayData?.map((item) => (
-                <div onClick={() => setModalShow(true)}>
-                  <ReportBox
-                    item={item}
-                    apiData={item}
-                    dateBuilder={dateBuilder(new Date())}
-                    delOnClickFunction={delOnClick}
-                  />
-                </div>
+                <ReportBox
+                  item={item}
+                  apiData={item}
+                  delOnClickFunction={delOnClick}
+                />
               ))}
             </div>
           </div>
         </div>
       </div>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
     </>
   );
 };
