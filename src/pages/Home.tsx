@@ -140,14 +140,14 @@ const Home = () => {
           <div className="homeContainer">
             <div className="homeDataContainer">
               <p className="listHeadContainer">Home Address</p>
-              <form onSubmit={inputHome}>
+              <form onSubmit={inputHome} className="homeFormClass">
                 <input
                   type="text"
                   className="inputHomeBox"
                   placeholder="Set Home Address"
                   onChange={(e) => sethomeAddress(e.target.value)}
                 ></input>
-                <input type="submit" value="Add" className="submitBtn"></input>
+                <input type="submit" value="Set" className="submitBtn"></input>
               </form>
 
               <HomeBox

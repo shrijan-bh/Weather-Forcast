@@ -83,62 +83,66 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className="date">{dateBuilder(new Date())}</div>
+            <div className="detailedBox">
+              <div className="date">{dateBuilder(new Date())}</div>
 
-            <div className="weatherBox">
-              <div className="weatherIcon">
-                {apiData?.weather?.map((item, index) => (
-                  <img
-                    className="logoIconHome"
-                    key={index}
-                    src={`https://openweathermap.org/img/wn/${item.icon}.png`}
-                  ></img>
-                ))}
-              </div>
-              <div className="TemperatureFactor">
-                <div className="temp">
-                  {Math.round(apiData?.main?.temp ?? 0)}°C
+              <div className="weatherBox">
+                <div className="weatherIcon">
+                  {apiData?.weather?.map((item, index) => (
+                    <img
+                      className="logoIcondetail"
+                      key={index}
+                      src={`https://openweathermap.org/img/wn/${item.icon}.png`}
+                    ></img>
+                  ))}
                 </div>
-                <div className="feelLike">
-                  Feels Like: {Math.round(apiData?.main?.feels_like ?? 0)}
-                  °C
-                </div>
-                <br />
-                <div className="coordinateBox">
-                  <div className="latitiudeBox">
-                    Latitude: {apiData?.coord.lat}°
+                <div className="TemperatureFactor">
+                  <div className="temp">
+                    {Math.round(apiData?.main?.temp ?? 0)}°C
                   </div>
-                  <div className="longitudeBox">
-                    Longitude: {apiData?.coord.lon}°
+                  <div className="feelLike">
+                    Feels Like: {Math.round(apiData?.main?.feels_like ?? 0)}
+                    °C
+                  </div>
+                  <br />
+                  <div className="coordinateBox">
+                    <div className="latitiudeBox">
+                      Latitude: {apiData?.coord.lat}°
+                    </div>
+                    <div className="longitudeBox">
+                      Longitude: {apiData?.coord.lon}°
+                    </div>
+                  </div>
+                  <div className="minTemp">
+                    Minimum Temperaure :{" "}
+                    {Math.round(apiData?.main.temp_min ?? 0)}
+                    °C
+                  </div>
+                  <div className="maxTemp">
+                    MAximum Temperature:{" "}
+                    {Math.round(apiData?.main.temp_max ?? 0)}
+                    °C
+                  </div>
+                  <div className="pressure">
+                    Pressure: {apiData?.main.pressure}hPa
+                  </div>
+                  <div className="humidity">
+                    Humidity: {apiData?.main.humidity}%
                   </div>
                 </div>
-                <div className="minTemp">
-                  Minimum Temperaure : {Math.round(apiData?.main.temp_min ?? 0)}
-                  °C
+                <div className="windFactor">
+                  <div className="windSpeed">
+                    Wind Speed: {apiData?.wind.speed}
+                  </div>
+                  <div className="winddegree">
+                    Wind Angle: {apiData?.wind.deg}°
+                  </div>
                 </div>
-                <div className="maxTemp">
-                  MAximum Temperature: {Math.round(apiData?.main.temp_max ?? 0)}
-                  °C
+                <div className="weather">
+                  {apiData?.weather?.map((item, index) => (
+                    <p key={index}>{item?.description}</p>
+                  ))}
                 </div>
-                <div className="pressure">
-                  Pressure: {apiData?.main.pressure}hPa
-                </div>
-                <div className="humidity">
-                  Humidity: {apiData?.main.humidity}%
-                </div>
-              </div>
-              <div className="windFactor">
-                <div className="windSpeed">
-                  Wind Speed: {apiData?.wind.speed}
-                </div>
-                <div className="winddegree">
-                  Wind Angle: {apiData?.wind.deg}°
-                </div>
-              </div>
-              <div className="weather">
-                {apiData?.weather?.map((item, index) => (
-                  <p key={index}>{item?.description}</p>
-                ))}
               </div>
             </div>
           </Modal.Body>

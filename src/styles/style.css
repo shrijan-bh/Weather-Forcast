@@ -22,12 +22,12 @@ body {
   box-shadow: 4px 4px 250px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 1rem 2rem 2rem;
-  width: 55%;
+  width: 60%;
 }
 
 .submitBtn {
   display: inline-flex;
-
+  margin: 0 10px 10px 10px;
   padding: 0.5rem;
   outline: none;
   border: none;
@@ -59,22 +59,30 @@ body {
 
 .inputBox {
   display: inline-flex;
-  padding: 0.5rem 0.5rem 0.2rem;
+  padding: 0.5rem 0.5rem 0rem;
   outline: none;
   border: 1px rgb(187, 187, 187);
   border-bottom-style: solid;
-  margin: 0 0 0 30rem;
+  margin: 0 0rem 0 -4.3rem;
 }
 
 .inputHomeBox {
   display: inline-flex;
-  padding: 0.5rem 0.5rem 0.2rem;
+  padding: 0.5rem 0.5rem 0rem;
   outline: none;
   border: 1px rgb(187, 187, 187);
   border-bottom-style: solid;
-  margin: 0 0 0 45rem;
+  margin: 0 0 0 0rem;
 }
 
+.homeFormClass {
+  float: right;
+  margin-right: 0rem;
+}
+.formBox {
+  float: right;
+  margin-right: -5.2rem;
+}
 .listHeadContainer {
   font-size: 1.2rem;
   font-weight: 500;
@@ -157,6 +165,15 @@ body {
   width: 100px;
   height: 100px;
 }
+
+.weatherIcon .logoIcondetail {
+  display: inline-flex;
+  margin: 0 20rem 0;
+  width: 100px;
+  height: 100px;
+  background-color: #e2e1e1;
+  border-radius: 5px;
+}
 .homeContainer {
   margin: -1rem 0 0 0;
 }
@@ -176,7 +193,10 @@ body {
   position: static;
 }
 .deleteBox {
-  position: absolute;
-  top: 38rem;
-  margin: 0 0 0 16.5rem;
+  position: inline-grid;
+  margin: -16rem 0 0 14rem;
+}
+
+.detailedBox {
+  text-align: center;
 }
