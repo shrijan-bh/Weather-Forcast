@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import React from "react";
 
 import "../styles/style.css";
@@ -15,7 +15,7 @@ const Home = () => {
   const [apiData, setApiData] = useState<ApiData>();
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
   const [homeAddrData, setHomeAddrData] = useState<ApiData>();
-  const homeAddress = "Kathmandu";
+  const [homeAddress, sethomeAddress] = useState("");
   async function getWeatherData(inputValue: string) {
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
     await fetch(api)
@@ -23,6 +23,7 @@ const Home = () => {
       .then((data: ApiData) => {
         if (data.cod === 200) {
           setApiData(data);
+          console.log(apiData);
 
           if (arrayData.length < 3) {
             if (
@@ -58,11 +59,32 @@ const Home = () => {
       });
   }
 
+  async function getHomeWeatherData(homeAddress: string) {
+    const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
+    await fetch(api)
+      .then((response) => response.json())
+      .then((data: ApiData) => {
+        if (data.cod === 200) {
+          setHomeAddrData(data);
+        } else {
+          setinputValue("");
+
+          toastHook({
+            message: "No city found",
+            type: "warning",
+          });
+        }
+      });
+  }
   const inputOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     getWeatherData(inputValue);
   };
 
+  const inputHome = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    getHomeWeatherData(homeAddress);
+  };
   const dateBuilder = (d: Date) => {
     const months = [
       "January",
@@ -107,25 +129,6 @@ const Home = () => {
       : console.log("No data");
   };
 
-  useEffect(() => {
-    const defaultDataFetch = async () => {
-      const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
-      await fetch(api)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.cod === 200) {
-            setHomeAddrData(data);
-          } else {
-            toastHook({
-              message: "No city found",
-              type: "warning",
-            });
-          }
-        });
-    };
-    defaultDataFetch().catch((err) => console.log(err));
-  }, []);
-
   return (
     <>
       <ToastContainer />
@@ -137,6 +140,15 @@ const Home = () => {
           <div className="homeContainer">
             <div className="homeDataContainer">
               <p className="listHeadContainer">Home Address</p>
+              <form onSubmit={inputHome}>
+                <input
+                  type="text"
+                  className="inputHomeBox"
+                  placeholder="Set Home Address"
+                  onChange={(e) => sethomeAddress(e.target.value)}
+                ></input>
+                <input type="submit" value="Add" className="submitBtn"></input>
+              </form>
 
               <HomeBox
                 homeAddrData={homeAddrData}

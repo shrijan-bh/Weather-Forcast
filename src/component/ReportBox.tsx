@@ -84,14 +84,7 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
           </Modal.Header>
           <Modal.Body>
             <div className="date">{dateBuilder(new Date())}</div>
-            <div className="coordinateBox">
-              <div className="latitiudeBox">
-                Latitude: {apiData?.coord.lat}°
-              </div>
-              <div className="longitudeBox">
-                Longitude: {apiData?.coord.lon}°
-              </div>
-            </div>
+
             <div className="weatherBox">
               <div className="weatherIcon">
                 {apiData?.weather?.map((item, index) => (
@@ -111,6 +104,14 @@ const ReportBox = ({ item, apiData, delOnClickFunction }: ICardProps) => {
                   °C
                 </div>
                 <br />
+                <div className="coordinateBox">
+                  <div className="latitiudeBox">
+                    Latitude: {apiData?.coord.lat}°
+                  </div>
+                  <div className="longitudeBox">
+                    Longitude: {apiData?.coord.lon}°
+                  </div>
+                </div>
                 <div className="minTemp">
                   Minimum Temperaure : {Math.round(apiData?.main.temp_min ?? 0)}
                   °C

@@ -26,9 +26,8 @@ body {
 }
 
 .submitBtn {
-  display: inline;
-  margin-left: 0.3rem;
-  margin-top: 1rem;
+  display: inline-flex;
+
   padding: 0.5rem;
   outline: none;
   border: none;
@@ -59,12 +58,21 @@ body {
 }
 
 .inputBox {
-  display: inline;
+  display: inline-flex;
   padding: 0.5rem 0.5rem 0.2rem;
   outline: none;
   border: 1px rgb(187, 187, 187);
   border-bottom-style: solid;
-  margin-bottom: 1rem;
+  margin: 0 0 0 30rem;
+}
+
+.inputHomeBox {
+  display: inline-flex;
+  padding: 0.5rem 0.5rem 0.2rem;
+  outline: none;
+  border: 1px rgb(187, 187, 187);
+  border-bottom-style: solid;
+  margin: 0 0 0 45rem;
 }
 
 .listHeadContainer {
