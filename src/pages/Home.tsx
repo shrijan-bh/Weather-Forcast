@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 
 import "../styles/style.css";
@@ -13,8 +13,12 @@ import HomeBox from "../component/HomeBox";
 const Home = () => {
   const [inputValue, setinputValue] = useState("");
   const [apiData, setApiData] = useState<ApiData>();
+  const storageItems = JSON.parse(
+    localStorage.getItem("HomeAddressData") || "[]"
+  );
+
   const [arrayData, setArrayData] = useState<ApiData[]>([]);
-  const [homeAddrData, setHomeAddrData] = useState<ApiData>();
+  const [homeAddrData, setHomeAddrData] = useState<ApiData>(storageItems);
   const [homeAddress, sethomeAddress] = useState("");
   async function getWeatherData(inputValue: string) {
     const api = `https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
@@ -59,8 +63,14 @@ const Home = () => {
       });
   }
 
+  useEffect(() => {
+    localStorage.setItem("HomeAddressData", JSON.stringify(homeAddrData));
+  }, [homeAddrData]);
+
   async function getHomeWeatherData(homeAddress: string) {
-    const api = `https://api.openweathermap.org/data/2.5/weather?q=${homeAddress}&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
+    const api = `https://api.openweathermap.org/data/2.5/weather?q=${
+      homeAddress || "kathmandu"
+    }&appid=ce66f62e3e008767f84508de2dad259b&units=metric`;
     await fetch(api)
       .then((response) => response.json())
       .then((data: ApiData) => {
